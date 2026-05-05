@@ -53,10 +53,10 @@ model.fit(X_train_scaled, y_train)
 # Predicting on the test set
 y_pred = model.predict(X_test_scaled)
 # Evaluating the model
-mse = mean_squared_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
-print(f"Linear Regression MSE: {mse}")
-print(f"Linear Regression R^2 Score: {r2}")
+lr_mse = mean_squared_error(y_test, y_pred)
+lr_r2 = r2_score(y_test, y_pred)
+print(f"Linear Regression MSE: {lr_mse}")
+print(f"Linear Regression R^2 Score: {lr_r2}")
 
 print("\nParameter Analysis for KNN Regression")
 # Testing different values of K for KNN regression
@@ -303,3 +303,24 @@ plt.legend()
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
+# Table to show the results of R^2 and MSE
+results = pd.DataFrame({
+    "Model": ["Linear Regression", "KNN (k={})".format(best_k), "Neural Network"],
+    "MSE": [lr_mse, best_mse, nn_mse],
+    "R^2 Score": [lr_r2, best_r2, nn_r2]
+})
+
+print("\nModel Performance Comparison:")
+print(results)
+
+# Comparison table for before and after feature selection of the NN
+comparison = pd.DataFrame({
+    "Metric": ["MSE", "R² Score"],
+    "Before Feature Selection": [fs_mse, fs_r2],
+    "After Feature Selection": [nn_mse, nn_r2]
+})
+
+comparison = comparison.set_index("Metric")
+print("\nNeural Network: Before vs After Feature Selection")
+print(comparison.to_string(float_format="{:.4f}".format))
