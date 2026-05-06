@@ -291,7 +291,8 @@ plt.show()
 # Linear regression graph
 plt.figure(figsize=(14, 7))
 
-dates = df['Date'].iloc[-100:]
+# y_test and y_pred come from the original df split, so use df here
+dates = df['Date'].loc[y_test.index[-100:]]
 
 plt.plot(dates, y_test.iloc[-100:], label='Actual Returns', linewidth=2)
 plt.plot(dates, y_pred[-100:], label='Linear Regression Predictions', linestyle='--')
